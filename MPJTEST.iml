@@ -8,7 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="mpj" level="project" />
-    <orderEntry type="library" name="Jama-1.0.3" level="project" />
     <orderEntry type="library" name="org.la4j:la4j:0.6.0" level="project" />
   </component>
 </module>

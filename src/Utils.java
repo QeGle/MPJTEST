@@ -1,4 +1,20 @@
+import org.la4j.Matrix;
+import org.la4j.Vector;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Utils {
+
+	public static void main(String[] args) throws IOException {
+		Matrix A = getMatrixFromFile("C:\\Users\\user\\Desktop\\ФОМ\\MPJTEST\\src\\file.txt", 5,2);
+
+
+		for (int i = 0; i < A.rows(); i++) {
+			System.out.println(A.getRow(i));
+		}
+	}
 
 
 	/**
@@ -45,11 +61,78 @@ public class Utils {
 	 */
 	static int[] initArray(int start, int end, int step) {
 		//+1 - чтобы элемент end также включался в массив.
-		int returnMassive[] = new int[(end/step)+1];
+		int returnMassive[] = new int[(end / step) + 1];
 		for (int i = 0; i < returnMassive.length; i++) {
-			returnMassive[i] = start+(i * step);
+			returnMassive[i] = start + (i * step);
 		}
 		return returnMassive;
+	}
+
+	static int getRowsCount(String fileName) throws IOException {
+		int count = 0;
+		try (BufferedReader reader = new BufferedReader(
+				new FileReader(fileName))) {
+			count = Integer.parseInt(reader.readLine());
+			reader.close();
+		}
+
+		return count;
+	}
+
+	static int getColumnsCount(String fileName) throws IOException {
+		int count = 0;
+		try (BufferedReader reader = new BufferedReader(
+				new FileReader(fileName))) {
+			//т.к. мы считываем файл заново
+			//при первом чтении мы брали кол-во строк
+			reader.readLine();
+			count = Integer.parseInt(reader.readLine());
+			reader.close();
+		}
+
+		return count;
+	}
+
+	static Vector getVectorFromFile(String fileName, int row, int before) throws IOException {
+		String str;
+		String strArr[];
+		double[] A = new double[row];
+		try (BufferedReader reader = new BufferedReader(
+				new FileReader(fileName))) {
+			for (int i = 0; i < before; i++) {
+				reader.readLine();
+			}
+			for (int i = 0; i < row; i++) {
+				A[i] = Integer.parseInt(reader.readLine());
+
+			}
+			reader.close();
+		}
+
+		return Vector.fromArray(A);
+
+
+	}
+
+	static Matrix getMatrixFromFile(String fileName, int row, int before) throws IOException {
+		String str;
+		String strArr[];
+		double[][] A = new double[row][row];
+		try (BufferedReader reader = new BufferedReader(
+				new FileReader(fileName))) {
+			for (int i = 0; i < before; i++) {
+				reader.readLine();
+			}
+			for (int i = 0; i < row; i++) {
+				str = reader.readLine();
+				strArr = str.split(" ");
+				for (int j = 0; j < strArr.length; j++) {
+					A[i][j] = Integer.parseInt(strArr[j]);
+				}
+			}
+			reader.close();
+		}
+		return Matrix.from2DArray(A);
 	}
 }
 
